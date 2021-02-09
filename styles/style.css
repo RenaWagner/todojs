@@ -1,0 +1,63 @@
+html {
+    font-family: 'Roboto', sans-serif;;
+    font-size: 10px;
+}
+
+body {
+    width: 500px;
+    margin: 0 auto;
+    border: 1px solid #c1c1c1;
+}
+
+h1 {
+    font-size: 5em;
+    text-align:center;
+    font-weight: bold;
+}
+
+.input {
+    width: 498px;
+    font-size: 2em;
+    padding: 5px 0 5px 2px;
+    border-top: 1px solid #c1c1c1;
+    border-right:none;
+    border-bottom: 1px solid #c1c1c1;
+    border-left: none;
+}
+
+.todoList{
+    margin-top: 20px;
+}
+
+ul {
+    width: 100%;
+    margin-top: 50px;
+    padding: 0;
+    list-style-type: none;
+}
+
+li {
+    padding: 5px 0 5px 5px;
+    font-size: 1.7em;
+    border: 1px solid #c1c1c1;
+}
+
+input:checked + label {
+    text-decoration: line-through;
+    color: #c1c1c1;
+}
+
+.summary {
+    display: flex;
+    flex: flex-wrap;
+    background-color: #616161;
+    color: white;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 5px 0 5px 5px;
+}
+
+.summary p {
+    margin: 0;
+    padding: 0;
+}
