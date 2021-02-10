@@ -5,15 +5,15 @@ function updateCounters(){
     const classTodoCompleted = document.querySelectorAll('.todoCompleted');
 
     let todoCounter = classTodo.length;
-    const totalTodo = document.querySelector('#totalTodo');
-    totalTodo.innerHTML = `${todoCounter}`;
+    const idTotalTodo = document.querySelector('#totalTodo');
+    idTotalTodo.innerHTML = `${todoCounter}`;
 
     let todoCompletedCounter = classTodoCompleted.length;
-    const totalDone = document.querySelector('#totalDone');
-    totalDone.innerHTML = `${todoCompletedCounter}`;
+    const idTotalDone = document.querySelector('#totalDone');
+    idTotalDone.innerHTML = `${todoCompletedCounter}`;
    
-    const total = document.querySelector('#total');
-    total.innerHTML = `${todoCounter + todoCompletedCounter}`;
+    const idTotal = document.querySelector('#total');
+    idTotal.innerHTML = `${todoCounter + todoCompletedCounter}`;
 }
 
 updateCounters();
@@ -76,3 +76,16 @@ function createTodo(textInput){
 
     ul.appendChild(newTodoList);
 }
+
+function cleanUpDoneTodos(){
+    const wholeLists = document.querySelectorAll('li');
+    for (let i = 0; i < wholeLists.length ; i++){
+        if (wholeLists[i].classList.contains('todoCompleted')){
+            wholeLists[i].remove();
+        }
+    }
+    updateCounters();
+}
+
+const cleanUpBtn = document.querySelector('a');
+cleanUpBtn.addEventListener('click',cleanUpDoneTodos);

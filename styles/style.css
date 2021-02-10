@@ -49,3 +49,7 @@ li {
     padding: 5px 0 5px 5px;
 }
 
+a {
+    float: right;
+    margin-right: 10px;
+}
