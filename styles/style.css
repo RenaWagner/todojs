@@ -47,9 +47,7 @@ input:checked + label {
     color: #c1c1c1;
 }
 
-.summary {
-    display: flex;
-    flex: flex-wrap;
+.footer {
     background-color: #616161;
     color: white;
     font-size: 1.5em;
@@ -57,7 +55,3 @@ input:checked + label {
     padding: 5px 0 5px 5px;
 }
 
-.summary p {
-    margin: 0;
-    padding: 0;
-}

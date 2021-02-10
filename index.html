@@ -8,18 +8,18 @@
     <title>Todo List App</title>
   </head>
   <body>
-      <h1>TodoList</h1>
-      <input class='input' type='text' placeholder='What needs to be done?'>
-      <div class='todoList'>
-          <ul>
-              <li><input class='list' type='checkbox'><label>Sweep the floor</label></li>
-              <li><input class= 'list' type='checkbox' checked='checked'><label>Dust the vase</label></li>
-          </ul>
+      <div class='container'>
+        <h1>TodoList</h1>
+        <input class='input' type='text' placeholder='What needs to be done?'>
+        <div class='todoList'>
+            <ul>
+                <li><input class='list' type='checkbox'><label>Sweep the floor</label></li>
+                <li><input class= 'list' type='checkbox' checked='checked'><label>Dust the vase</label></li>
+            </ul>
+        </div>
       </div>
-      <div class='summary'>
-          <p>Todo: 1 /</p>
-          <p>Done: 0 /</p>
-          <p>Total: 1 </p>
+      <div class='footer'>
+          Todo:<span id='totalTodo'>1</span>&nbsp;&#183;&nbsp;Done:<span id='totalDone'>0</span>&nbsp;&#183;&nbsp;Total:<span id='total'>1</span>
       </div>
   </body>
   <script src='scripts/main.js'charset= 'utf-8'></script>
