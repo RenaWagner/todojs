@@ -1,30 +1,40 @@
-const list = document.querySelectorAll('.list');
-const totalTodo = document.querySelector('#totalTodo');
-const totalDone = document.querySelector('#totalDone');
-const total = document.querySelector('#total');
+const todoList = document.querySelector('.todoList');
+const checkboxes = document.querySelectorAll('.checkbox');
 
+function updateCounters(){   
+    const todo = document.querySelectorAll('.todo');
+    const todoCompleted = document.querySelectorAll('.todoCompleted');
 
-function updateCounters(){
-    //update totalTodo//
-    let totalTodoCounter = 0;
-    for (let i =0; i < list.length; i++){
-        if(list[i].hasAttribute('checked')){
-            totalTodoCounter++;
-        }
-    }
-    totalTodo.innerHTML = `${totalTodoCounter}`;
+    let todoCounter = todo.length;
+    const totalTodo = document.querySelector('#totalTodo');
+    totalTodo.innerHTML = `${todoCounter}`;
 
-    //update totalDone//
-    let totalDoneCounter = 0;
-    for (let i =0; i < list.length; i++){
-        if(!list[i].hasAttribute('checked')){
-            totalDoneCounter++;
-        }
-    }
-    totalDone.innerHTML = `${totalDoneCounter}`
-    
-    //update totalTodo
-    total.innerHTML = `${totalTodoCounter + totalDoneCounter}`
+    let todoCompletedCounter = todoCompleted.length;
+    const totalDone = document.querySelector('#totalDone');
+    totalDone.innerHTML = `${todoCompletedCounter}`;
+   
+    const total = document.querySelector('#total');
+    total.innerHTML = `${todoCounter + todoCompletedCounter}`;
 }
 
 updateCounters();
+
+function toggleDone(event){
+    let checkbox = event.target;
+    let label = checkbox.parentNode;
+    let list = label.parentNode;
+
+    if(checkbox.checked){
+        label.style.textDecoration = 'line-through';
+        list.classList.remove('todo');
+        list.classList.add('todoCompleted');
+    } else {
+        label.style.textDecoration = 'none';
+        list.classList.remove('todoCompleted');
+        list.classList.add('todo');
+    }
+
+    updateCounters();
+}
+
+todoList.addEventListener('change', toggleDone);

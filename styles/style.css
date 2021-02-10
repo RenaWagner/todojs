@@ -42,10 +42,6 @@ li {
     border: 1px solid #c1c1c1;
 }
 
-input:checked + label {
-    text-decoration: line-through;
-    color: #c1c1c1;
-}
 
 .footer {
     background-color: #616161;
