@@ -1,5 +1,4 @@
 const todoList = document.querySelector('.todoList');
-const checkboxes = document.querySelectorAll('.checkbox');
 
 function updateCounters(){   
     const todo = document.querySelectorAll('.todo');
