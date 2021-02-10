@@ -16,13 +16,11 @@ h1 {
 }
 
 .input {
-    width: 498px;
+    width: 100%;
     font-size: 2em;
     padding: 5px 0 5px 2px;
-    border-top: 1px solid #c1c1c1;
-    border-right:none;
-    border-bottom: 1px solid #c1c1c1;
-    border-left: none;
+    box-sizing:border-box;
+
 }
 
 .todoList{

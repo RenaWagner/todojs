@@ -10,11 +10,13 @@
   <body>
       <div class='container'>
         <h1>TodoList</h1>
-        <input class='input' type='text' placeholder='What needs to be done?'>
+        <form>
+          <input class='input' type='text' id='textInput' placeholder='What needs to be done?'>
+        </form>
         <div class='todoList'>
             <ul>
                 <li class='todo'><label><input type='checkbox'>Sweep the floor</label></li>
-                <li class='todoCompleted'><label><input type='checkbox' checked='checked'>Dust the vase</label></li>
+                <li class='todoCompleted'><label><input type='checkbox' checked>Dust the vase</label></li>
             </ul>
         </div>
       </div>
