@@ -1,4 +1,6 @@
-let todoListArray = [];
+let todoListObject= {};
+let todolistsLocalStorage = {};
+let taskArray = [];
 
 // Update the counters in the footer
 function updateCounters(){   
@@ -24,29 +26,35 @@ function toggleDone(event){
     let checkbox = event.target;
     let label = checkbox.parentNode;
     let list = label.parentNode;
+    console.log(todolistsLocalStorage)
+    taskArray = Object.keys(todolistsLocalStorage);
 
     if(checkbox.checked){
         label.style.textDecoration = 'line-through';
         list.classList.remove('todo');
         list.classList.add('todoCompleted');
-        todolists.forEach(function (item){
-            if (item.id == list.getAttribute('id')){
-                item.completed = true;
+        
+        console.log(taskArray);
+        for (let i = 0; i < taskArray.length; i++){
+            if (todolistsLocalStorage[taskArray[i]].id == list.getAttribute('id')){
+                todolistsLocalStorage[taskArray[i]].completed = true;
             }
-        })
+        }
+
     } else if (!checkbox.checked) {
         label.style.textDecoration = 'none';
-        todolists.forEach(function (item){
-            if (item.id == list.getAttribute('id')){
-                item.completed = false;
+
+        for (let i = 0; i < taskArray.length; i++){
+            if (todolistsLocalStorage[taskArray[i]].id == list.getAttribute('id')){
+                todolistsLocalStorage[taskArray[i]].completed = false;
             }
-        })
+        }
+
         list.classList.remove('todoCompleted');
         list.classList.add('todo');
     }
 
-    addToLocalStorage(todolists)
-
+    addToLocalStorage(todolistsLocalStorage);
     updateCounters();
 }
 
@@ -70,17 +78,19 @@ document.querySelector("form").addEventListener("submit", function addNewTodo(ev
     const dueDateInputField = document.getElementById('dueDate');
     let dueDateInput = dueDateInputField.value;
 
+    let task = textInput;
     //localStorage
     const todo = {
-        id: Date.now(),
-        task: textInput,
-        color: colorInput,
-        due: dueDateInput,
-        completed: false,
-        cleanedup: false,
+            id: Date.now(),
+            task: textInput,
+            color: colorInput,
+            due: dueDateInput,
+            completed: false,
+            cleanedup: false,
     }
-    todoListArray.push(todo);
-    addToLocalStorage(todoListArray);
+    todoListObject[task] = todo;
+    console.log('todoListObject',todoListObject);
+    addToLocalStorage(todoListObject);
 
     createTodo(textInput, colorInput, dueDateInput, todo.id);
 
@@ -118,22 +128,29 @@ function createTodo(textInput, colorInput, dueDateInput, id){
 }
 
 function cleanUpDoneTodos(){
-    const wholeLists = document.querySelectorAll('li');
+    let wholeLists = document.querySelectorAll('li');
     for (let i = 0; i < wholeLists.length ; i++){
         if (wholeLists[i].classList.contains('todoCompleted')){
             //delete from objects
-            let attribute = wholeLists[i].getAttribute('id');
-            todoListArray.forEach(function (item){
-                if (attribute == item.id){
-                    item.cleanedup = true;
+            let id = wholeLists[i].getAttribute('id');
+            
+            for (let i = 0; i < taskArray.length; i++){
+                if (todolistsLocalStorage[taskArray[i]].id == id){
+                    todolistsLocalStorage[taskArray[i]].cleanedup = true;
                 }
-                if (item.cleanedup && attribute == todolists[i].id){
-                    localStorage.removeItem(item);
-                }
-            })
+            }        
             wholeLists[i].remove();
         }
     }
+
+    for (let i = 0; i < taskArray.length; i++){
+        if (todolistsLocalStorage[taskArray[i]].cleanedup){
+            console.log(todolistsLocalStorage[taskArray[i]]);
+            delete todolistsLocalStorage[taskArray[i]];
+        }
+    }
+    console.log('clicked delete');
+    addToLocalStorage(todolistsLocalStorage);
     updateCounters();
 }
 
@@ -172,23 +189,24 @@ function checkDueDate() {
     }
 }
 
-function addToLocalStorage(todoListArray){
-     localStorage.setItem('todolists', JSON.stringify(todoListArray));
+function addToLocalStorage(todoListObject){
+    let JSONstring = JSON.stringify(todoListObject);
+    localStorage.setItem('todosStorage', JSONstring);
 }
 
 function getFromLocalStorage(){
-    const reference = localStorage.getItem('todolists');
+    const reference = localStorage.getItem('todosStorage');
     
     if (reference){
-        todolists = JSON.parse(reference);
-        
-        for (let i = 0; i < todolists.length; i++){
-            createTodo(todolists[i].task, todolists[i].color, todolists[i].due, todolists[i].id);
+        todolistsLocalStorage = JSON.parse(reference);
+        taskArray = Object.keys(todolistsLocalStorage);
+
+        for (let i = 0; i < taskArray.length; i++){
+            createTodo(taskArray[i], todolistsLocalStorage[taskArray[i]].color, todolistsLocalStorage[taskArray[i]].due, todolistsLocalStorage[taskArray[i]].id);
             const wholeLists = document.querySelectorAll('li');
             for(let i = 0; i < wholeLists.length; i++){
                 let attribute = wholeLists[i].getAttribute('id');
-                console.log(attribute);
-                if (todolists[i].completed && attribute == todolists[i].id){
+                if (todolistsLocalStorage[taskArray[i]].completed && attribute == todolistsLocalStorage[taskArray[i]].id){
                     wholeLists[i].style.textDecoration = 'line-through';
                     wholeLists[i].classList.remove('todo');
                     wholeLists[i].classList.add('todoCompleted');
