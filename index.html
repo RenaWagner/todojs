@@ -13,9 +13,17 @@
         <form>
           <input class='input' type='text' id='textInput' placeholder='What needs to be done?'>
         </form>
+        <div class='color-picker-container'>
+          <p>Select the color for the task:</p>
+          <input class='colorPicker' type="color" id="favcolor"  value="#000000">
+        </div>
+        <div class='date-picker-container'>
+          <p>Select the due date for the task:</p>
+          <input type="date" id="dueDate">
+        </div>
         <div class='todoList'>
             <ul>
-                <li class='todo'><label><input type='checkbox'>Sweep the floor</label></li>
+                <li class='todo'><label><input type='checkbox'>Sweep the floor<span>2021-03-04</span></label></li>
                 <li class='todoCompleted'><label><input type='checkbox' checked>Dust the vase</label></li>
             </ul>
         </div>

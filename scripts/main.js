@@ -49,9 +49,16 @@ const ul = document.querySelector('ul');
 document.querySelector("form").addEventListener("submit", function addNewTodo(event) {
     event.preventDefault();
     
-    let inputField = document.getElementById('textInput');
+    const inputField = document.getElementById('textInput');
     let textInput = inputField.value;
-    createTodo(textInput);
+
+    const colorInputField = document.getElementById('favcolor');
+    let colorInput = colorInputField.value;
+
+    const dueDateInputField = document.getElementById('dueDate');
+    let dueDateInput = dueDateInputField.value;
+
+    createTodo(textInput, colorInput, dueDateInput);
 
     inputField.value = null;
 
@@ -59,7 +66,7 @@ document.querySelector("form").addEventListener("submit", function addNewTodo(ev
     
   });
 
-function createTodo(textInput){
+function createTodo(textInput, colorInput, dueDateInput){
     let label = document.createElement('label');
 
     let checkbox = document.createElement('input');
@@ -70,10 +77,17 @@ function createTodo(textInput){
     let text = document.createTextNode(textInput);
     label.appendChild(text);
 
+    //adding due date//
+    let dueDateSpan = document.createElement('span');
+    label.appendChild(dueDateSpan);
+    let dueDateText = document.createTextNode(dueDateInput);
+    label.appendChild(dueDateText);
+
     let newTodoList = document.createElement('li');
     newTodoList.classList.add('todo');
+    //Adding color//
+    newTodoList.style.color = colorInput;
     newTodoList.appendChild(label);
-
     ul.appendChild(newTodoList);
 }
 
