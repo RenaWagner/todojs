@@ -1,4 +1,6 @@
 
+let todoListArray = [];
+
 // Update the counters in the footer
 function updateCounters(){   
     const classTodo = document.querySelectorAll('.todo'); //specify the name of variables
@@ -58,11 +60,22 @@ document.querySelector("form").addEventListener("submit", function addNewTodo(ev
     const dueDateInputField = document.getElementById('dueDate');
     let dueDateInput = dueDateInputField.value;
 
+    //localStorage
+    const todo = {
+        task: textInput,
+        color: colorInput,
+        due: dueDateInput,   
+    }
+    todoListArray.push(todo);
+    addToLocalStorage(todoListArray);
+
     createTodo(textInput, colorInput, dueDateInput);
 
     inputField.value = null;
 
+    checkDueDate();
     updateCounters();
+    
     
   });
 
@@ -79,9 +92,10 @@ function createTodo(textInput, colorInput, dueDateInput){
 
     //adding due date//
     let dueDateSpan = document.createElement('span');
+    dueDateSpan.setAttribute('class', 'dueDate');
     label.appendChild(dueDateSpan);
     let dueDateText = document.createTextNode(dueDateInput);
-    label.appendChild(dueDateText);
+    dueDateSpan.appendChild(dueDateText);
 
     let newTodoList = document.createElement('li');
     newTodoList.classList.add('todo');
@@ -89,6 +103,7 @@ function createTodo(textInput, colorInput, dueDateInput){
     newTodoList.style.color = colorInput;
     newTodoList.appendChild(label);
     ul.appendChild(newTodoList);
+
 }
 
 function cleanUpDoneTodos(){
@@ -103,3 +118,62 @@ function cleanUpDoneTodos(){
 
 const cleanUpBtn = document.querySelector('a');
 cleanUpBtn.addEventListener('click',cleanUpDoneTodos);
+
+function checkDueDate() {
+    const dueDateSpan = document.querySelectorAll('.dueDate');
+
+    for (let i = 0; i < dueDateSpan.length ; i++){
+        let today = new Date();
+        let todayYear = today.getFullYear();
+        let todayMonth = today.getMonth() + 1;
+        let todayDate = today.getDate();
+
+        if (todayMonth < 10){
+            todayMonth = `0${todayMonth}`;
+        }
+        if (todayDate < 10){
+            todayDate = `0${todayDate}`;
+        }
+        let todaysDate = `${todayYear}-${todayMonth}-${todayDate}`;
+
+        let dueDate = dueDateSpan[i].textContent;
+        let array = dueDate.split('-')
+        let dueDateYear = array[0];
+        let dueDateMonth = array[1];
+        let dueDateDate = array[2];
+
+        if(todaysDate == dueDateSpan[i].textContent){
+            dueDateSpan[i].parentNode.style.backgroundColor = 'orange';
+        }
+        else if (dueDateYear < todayYear){
+            dueDateSpan[i]　.parentNode.style.backgroundColor = 'red';
+        }
+        else if (dueDateMonth < todayMonth){
+            dueDateSpan[i].parentNode.style.backgroundColor = 'red';
+        }
+        else if (dueDateDate < todayDate){
+            dueDateSpan[i].parentNode.style.backgroundColor = 'red';
+        }
+    }
+}
+
+function addToLocalStorage(todoListArray){
+     localStorage.setItem('todolists', JSON.stringify(todoListArray));
+}
+
+function getFromLocalStorage(){
+    const reference = localStorage.getItem('todolists');
+    
+    if (reference){
+        todolists = JSON.parse(reference);
+        console.log(todolists);
+        
+        for (let i = 0; i < todolists.length; i++){
+            createTodo(todolists[i].task, todolists[i].color, todolists[i].due);
+        }
+        updateCounters();
+        checkDueDate()
+    }
+}
+  
+getFromLocalStorage();
